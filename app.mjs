@@ -11,6 +11,7 @@ app.get('/api/stock-price/:code', (req, res) => {
   // Check if SKU code exists in stockPrice data
   if (stockPrice[skuCode]) {
     const { stock, price } = stockPrice[skuCode];
+    const priceInDollars = (stockPrice[skuCode].price / 100).toFixed(2);
     
     // Find product details in products data
     const product = Object.values(products).find(p => p.skus.some(sku => sku.code === skuCode));
@@ -22,7 +23,7 @@ app.get('/api/stock-price/:code', (req, res) => {
       const url = `${id}-${capitalizedBrand}`; // Generate the URL
 
 
-      res.json({ brand, style, substyle, stock, price, url });
+      res.json({ brand, style, substyle, stock, priceInDollars, url });
     } else {
       res.status(404).json({ error: 'Product not found' });
     }
