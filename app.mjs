@@ -17,13 +17,13 @@ app.get('/api/stock-price/:code', (req, res) => {
     const product = Object.values(products).find(p => p.skus.some(sku => sku.code === skuCode));
 
     if (product) {
-      const { brand, style, substyle, id, information, skus } = product;
+      const { brand, style, substyle, id, information, skus, image } = product;
       const words = brand.split(' ');
       const capitalizedBrand = words[0].toLowerCase() + words.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(''); // Capitalize the first letter of the second word
       const url = `${id}-${capitalizedBrand}`; // Generate the URL
       const selectedSku = skus.filter(sku => sku.code === skuCode).pop();
 
-      res.json({ brand, style, substyle, stock, priceInDollars, url, information, selectedSku, skus });
+      res.json({ brand, style, substyle, stock, priceInDollars, url, information, selectedSku, skus, image });
     } else {
       res.status(404).json({ error: 'Product not found' });
     }
