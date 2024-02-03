@@ -1,8 +1,12 @@
 import express from 'express';
+import cors from 'cors'; 
 import products from './db/products.js';
 import stockPrice from './db/stock-price.js';
 
 const app = express();
+
+// Use cors middleware
+app.use(cors());
 
 // Endpoint to get stock and price by SKU code
 app.get('/api/stock-price/:code', (req, res) => {
@@ -17,13 +21,13 @@ app.get('/api/stock-price/:code', (req, res) => {
     const product = Object.values(products).find(p => p.skus.some(sku => sku.code === skuCode));
 
     if (product) {
-      const { brand, style, substyle, id, information, skus, image } = product;
+      const { brand, style, substyle, id, information, skus, image, origin } = product;
       const words = brand.split(' ');
       const capitalizedBrand = words[0].toLowerCase() + words.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(''); // Capitalize the first letter of the second word
       const url = `${id}-${capitalizedBrand}`; // Generate the URL
       const selectedSku = skus.filter(sku => sku.code === skuCode).pop();
 
-      res.json({ brand, style, substyle, stock, priceInDollars, url, information, selectedSku, skus, image });
+      res.json({ brand, style, substyle, stock, priceInDollars, url, information, selectedSku, skus, image, origin });
     } else {
       res.status(404).json({ error: 'Product not found' });
     }
