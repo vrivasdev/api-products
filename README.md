@@ -1,3 +1,5 @@
+## PRODUCT STOCK API
+
 Express JS API service: It reads JS DB's files
 
 1. Build an API endpoint that returns stock and price information for a specific product 
