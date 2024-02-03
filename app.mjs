@@ -4,7 +4,7 @@ import stockPrice from './db/stock-price.js';
 
 const app = express();
 
-// API endpoint to get stock and price by SKU code
+// Endpoint to get stock and price by SKU code
 app.get('/api/stock-price/:code', (req, res) => {
   const skuCode = req.params.code;
 
@@ -12,8 +12,6 @@ app.get('/api/stock-price/:code', (req, res) => {
   if (stockPrice[skuCode]) {
     const { stock, price } = stockPrice[skuCode];
     const priceInDollars = (stockPrice[skuCode].price / 100).toFixed(2);
-
-    console.log(stock);
 
     // Find product details in products data
     const product = Object.values(products).find(p => p.skus.some(sku => sku.code === skuCode));
@@ -32,6 +30,19 @@ app.get('/api/stock-price/:code', (req, res) => {
   } else {
     res.status(404).json({ error: 'SKU code not found' });
   }
+});
+
+// Get a list of products with URL field and brand name
+app.get('/api/products', (req, res) => {
+  const productList = products.map(product => {
+    const { brand, id } = product;
+    const words = brand.split(' ');
+    const capitalizedBrand = words[0].toLowerCase() + words.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+    const url = `${id}-${capitalizedBrand}`;
+    return { brand, url };
+  });
+
+  res.json(productList);
 });
 
 const PORT = 3000;
