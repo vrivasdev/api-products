@@ -12,7 +12,6 @@ decimal places (e.g., a product priced at 4350 cents should be shown as $43.50).
 1. Run npm install in the root's project
 2. Run npm start
 3. Project will run via port number 3000
-4. Services:
-   1 '/api/stock-price/:code': Will display product and stock by each sku code
-   2 '/api/products': Will displlay all products and their URLs
+4. Service => '/api/stock-price/:code': Will display product and stock by each sku code
+5. Service => '/api/products': Will displlay all products and their URLs
 
