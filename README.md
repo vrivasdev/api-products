@@ -8,7 +8,7 @@ should be /api/stock-price/123.
 3. Keep in mind that prices are stored in cents but should be displayed in dollars with 2 
 decimal places (e.g., a product priced at 4350 cents should be shown as $43.50).
 
-##INSTRUCTIONS
+## INSTRUCTIONS
 1. Run npm install in the root's project
 2. Run npm start
 3. Project will run via port number 3000
