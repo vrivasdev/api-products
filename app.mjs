@@ -12,18 +12,20 @@ app.get('/api/stock-price/:code', (req, res) => {
   if (stockPrice[skuCode]) {
     const { stock, price } = stockPrice[skuCode];
     const priceInDollars = (stockPrice[skuCode].price / 100).toFixed(2);
-    
+
+    console.log(stock);
+
     // Find product details in products data
     const product = Object.values(products).find(p => p.skus.some(sku => sku.code === skuCode));
 
     if (product) {
-      const { brand, style, substyle, id } = product;
+      const { brand, style, substyle, id, information, skus } = product;
       const words = brand.split(' ');
       const capitalizedBrand = words[0].toLowerCase() + words.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(''); // Capitalize the first letter of the second word
       const url = `${id}-${capitalizedBrand}`; // Generate the URL
+      const selectedSku = skus.filter(sku => sku.code === skuCode).pop();
 
-
-      res.json({ brand, style, substyle, stock, priceInDollars, url });
+      res.json({ brand, style, substyle, stock, priceInDollars, url, information, selectedSku, skus });
     } else {
       res.status(404).json({ error: 'Product not found' });
     }
