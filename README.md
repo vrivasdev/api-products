@@ -1,4 +1,4 @@
-## PRODUCTS STOCK API
+## PRODUCTS API
 
 Express JS API service: It reads JS DB's files
 
