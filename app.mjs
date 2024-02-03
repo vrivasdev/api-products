@@ -36,10 +36,12 @@ app.get('/api/stock-price/:code', (req, res) => {
 app.get('/api/products', (req, res) => {
   const productList = products.map(product => {
     const { brand, id } = product;
+
     const words = brand.split(' ');
     const capitalizedBrand = words[0].toLowerCase() + words.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
     const url = `${id}-${capitalizedBrand}`;
-    return { brand, url };
+    
+    return { id, brand, url };
   });
 
   res.json(productList);
